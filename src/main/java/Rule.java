@@ -1,28 +1,24 @@
+import lombok.Getter;
+
 public class Rule
 {
+    @Getter
     private final int number;
+    @Getter
+    private final double ignition;
     private final double internalAffiliation;
     private final double outsideAffiliation;
-    private final double ignition;
 
-    public Rule(int numer, double przynaleznoscDoWewnetrznej, double przynaleznoscDoZewnetrznej)
+    public Rule(int number, double internalAffiliation, double outsideAffiliation)
     {
-        number = numer;
-        internalAffiliation = przynaleznoscDoWewnetrznej;
-        outsideAffiliation = przynaleznoscDoZewnetrznej;
-        ignition = wyznaczZaplon();
+        this.number = number;
+        this.internalAffiliation = internalAffiliation;
+        this.outsideAffiliation = outsideAffiliation;
+        ignition = countIgnition();
     }
 
-    private double wyznaczZaplon(){
+    private double countIgnition(){
         return Math.min(internalAffiliation, outsideAffiliation);
-    }
-
-    public double getIgnition() {
-        return ignition;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
 }
