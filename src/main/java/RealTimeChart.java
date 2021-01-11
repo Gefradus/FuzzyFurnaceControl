@@ -49,7 +49,8 @@ public class RealTimeChart extends Stage {
         Thread updateThread = new Thread(() -> {
             try
             {
-                Calendar cal = createInstanceOfCalender();
+                Calendar cal = Calendar.getInstance();
+                cal.clear();
                 for(int j=0; j<=1439; j++){
                     cal.add(Calendar.MINUTE, 1);
                     Thread.sleep(sleepMillisecond);
@@ -57,7 +58,6 @@ public class RealTimeChart extends Stage {
                     int finalI = j;
                     Platform.runLater(() -> series.getData().add(new XYChart.Data<>(simpleDateFormat.format(time), getTempOrPower[finalI])));
                 }
-
             }
             catch (Exception ignored) {}
 
@@ -67,12 +67,4 @@ public class RealTimeChart extends Stage {
         updateThread.start();
     }
 
-    private Calendar createInstanceOfCalender(){
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MILLISECOND, 0);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        return cal;
-    }
 }
