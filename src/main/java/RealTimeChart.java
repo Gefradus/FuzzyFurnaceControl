@@ -49,13 +49,7 @@ public class RealTimeChart extends Stage {
         Thread updateThread = new Thread(() -> {
             try
             {
-                Calendar cal = Calendar.getInstance();
-
-                cal.set(Calendar.MILLISECOND, 0);
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-
+                Calendar cal = createInstanceOfCalender();
                 for(int j=0; j<=1439; j++){
                     cal.add(Calendar.MINUTE, 1);
                     Thread.sleep(sleepMillisecond);
@@ -71,5 +65,14 @@ public class RealTimeChart extends Stage {
 
         updateThread.setDaemon(true);
         updateThread.start();
+    }
+
+    private Calendar createInstanceOfCalender(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        return cal;
     }
 }
