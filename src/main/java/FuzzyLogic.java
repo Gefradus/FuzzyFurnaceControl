@@ -11,7 +11,7 @@ public class FuzzyLogic
     private int breakTime;
     @Setter
     private double d, c, m, k;
-    private double[] insideTemp, power, Δt, ΔT;
+    private double[] insideTemp, power, dt, dT;
     private double xIn, xOut;
     private final double tempInMissVLowTop = 2;
     private final double tempInMissLowBottom = 1;
@@ -36,8 +36,8 @@ public class FuzzyLogic
     private void defineArrays(){
         power = new double[86400];
         insideTemp = new double[86401];
-        Δt = new double[86400];
-        ΔT = new double[86400];
+        dt = new double[86400];
+        dT = new double[86400];
     }
 
     private void setTempsOut(){
@@ -66,14 +66,14 @@ public class FuzzyLogic
         double[] tempIncrease = new double[86400];
         for (int i=0; i<=86399; i++)
         {
-            ΔT[i] = outsideTemp[i] - insideTemp[i];           // ΔT jest to różnica temperatury zewnetrznej i wewnetrznej
-            Δt[i] = (k * Math.sqrt(area) * height * ΔT[i]) / (m * c * d);  //10 sekund czyli 1 iteracja
+            dT[i] = outsideTemp[i] - insideTemp[i];           // ΔT jest to różnica temperatury zewnetrznej i wewnetrznej
+            dt[i] = (k * Math.sqrt(area) * height * dT[i]) / (m * c * d);  //10 sekund czyli 1 iteracja
             // Δt jest to zmiana temperatury wewnętrznej pod wpływem temperatury zewnętrznej
 
             createRules(i);
 
             tempIncrease[i] = (power[i] * 1000) / (m * c);     //1kW to 1000W, 10 sekund trwa iteracja
-            insideTemp[i + 1] = insideTemp[i] + Δt[i] + tempIncrease[i];
+            insideTemp[i + 1] = insideTemp[i] + dt[i] + tempIncrease[i];
             // https://www.physicsclassroom.com/Class/thermalP/u18l1f.cfm?fbclid=IwAR2_gFvWmWkDTSpODqvbuMBw9niOQetVdwZ5idIsIy3hLV6uMY65G7YGCyw
             // https://pl.wikipedia.org/wiki/Przewodzenie_ciep%C5%82a
             // równanie Fouriera( q = (k * A * deltaT)/d )
@@ -82,6 +82,10 @@ public class FuzzyLogic
             // Q = m * c * Δt
         }
 
+        createCharts();
+    }
+
+    private void createCharts(){
         new RealTimeChart(ChartType.inside_temp, getTempIn(), breakTime);
         new RealTimeChart(ChartType.power, getPower(), breakTime);
         new RealTimeChart(ChartType.outside_temp, getTempOut(outsideTemp), breakTime);
