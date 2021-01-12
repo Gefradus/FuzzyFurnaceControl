@@ -13,13 +13,13 @@ import java.util.Date;
 
 public class RealTimeChart extends Stage
 {
-    private ChartType chartType;
+    private final ChartType chartType;
     private XYChart.Series<String, Number> series;
 
     public RealTimeChart(ChartType chartType, double[] getTempOrPower, int sleepMillisecond)
     {
+        this.chartType = chartType;
         setScene(new Scene(createInstanceOfChart(), 800, 600));
-
         show();
 
         Thread updateThread = new Thread(() -> {
