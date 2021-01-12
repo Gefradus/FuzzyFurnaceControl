@@ -22,29 +22,19 @@ public class FuzzyLogic
     private final double tempInMissHighTop = 15;
     private final double tempInMissVHighBottom = 10;
     private double heating_vVeryLow, heating_vLow, heating_low, heating_littleLow, heating_medium, heating_littleHigh, heating_High, heating_vHigh, heating_vVeryHigh;
-    private double tempOutMissingLowBottom, tempOutMissingLowTop, tempOutMissingMediumTop, tempOutMissingHighBottom, tempOutMissingHighTop;
+    private final double tempOutMissingLowBottom = 0;
+    private final double tempOutMissingLowTop = 37.5;
+    private final double tempOutMissingMediumTop = 75;
+    private final double tempOutMissingHighBottom = 37.5;
 
     private void defineVars(){
-        defineArrays();
         defineHeatingPowerPercentage();
-        defineTempsOut();
-        insideTemp[0] = startT;
-        power[0] = 0;
-    }
-
-    private void defineArrays(){
         power = new double[86400];
         insideTemp = new double[86401];
         dt = new double[86400];
         dT = new double[86400];
-    }
-
-    private void defineTempsOut(){
-        tempOutMissingLowBottom = 0;
-        tempOutMissingLowTop = 37.5;
-        tempOutMissingMediumTop = 75;
-        tempOutMissingHighBottom = 37.5;
-        tempOutMissingHighTop = 75;
+        insideTemp[0] = startT;
+        power[0] = 0;
     }
 
     private void defineHeatingPowerPercentage(){
@@ -251,6 +241,7 @@ public class FuzzyLogic
     }
     private double affiliationToOutMissingHigh(){
         if(outsideBetweenMediumAndHigh()){
+            double tempOutMissingHighTop = 75;
             return slopeRising(tempOutMissingHighBottom, xOut, tempOutMissingHighTop);
         }
         else return 0;
