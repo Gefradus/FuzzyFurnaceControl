@@ -21,14 +21,13 @@ public class FuzzyLogic
     private final double tempInMissHighBottom = 6;
     private final double tempInMissHighTop = 15;
     private final double tempInMissVHighBottom = 10;
-    private double heating_vVerylow, heating_vlow, heating_low, heating_littleLow, heating_medium, heating_littleHigh, heating_High, heating_vHigh, heating_vVeryHigh;
+    private double heating_vVeryLow, heating_vLow, heating_low, heating_littleLow, heating_medium, heating_littleHigh, heating_High, heating_vHigh, heating_vVeryHigh;
     private double tempOutMissingLowBottom, tempOutMissingLowTop, tempOutMissingMediumTop, tempOutMissingHighBottom, tempOutMissingHighTop;
 
     private void defineVars(){
         defineArrays();
-        setHeatingPowerPercentage();
-        setTempsOut();
-
+        defineHeatingPowerPercentage();
+        defineTempsOut();
         insideTemp[0] = startT;
         power[0] = 0;
     }
@@ -40,7 +39,7 @@ public class FuzzyLogic
         dT = new double[86400];
     }
 
-    private void setTempsOut(){
+    private void defineTempsOut(){
         tempOutMissingLowBottom = 0;
         tempOutMissingLowTop = 37.5;
         tempOutMissingMediumTop = 75;
@@ -48,9 +47,9 @@ public class FuzzyLogic
         tempOutMissingHighTop = 75;
     }
 
-    private void setHeatingPowerPercentage(){
-        heating_vVerylow = powerMax * 0.3;
-        heating_vlow = powerMax * 0.4;
+    private void defineHeatingPowerPercentage(){
+        heating_vVeryLow = powerMax * 0.3;
+        heating_vLow = powerMax * 0.4;
         heating_low = powerMax * 0.5;
         heating_littleLow = powerMax * 0.6;
         heating_medium = powerMax * 0.7;
@@ -86,9 +85,9 @@ public class FuzzyLogic
     }
 
     private void createCharts(){
-        new RealTimeChart(ChartType.inside_temp, getTempIn(), breakTime);
-        new RealTimeChart(ChartType.power, getPower(), breakTime);
-        new RealTimeChart(ChartType.outside_temp, getTempOut(outsideTemp), breakTime);
+        new RealTimeChart(ChartType.inside_temp, downloadTempIn(), breakTime);
+        new RealTimeChart(ChartType.power, downloadPower(), breakTime);
+        new RealTimeChart(ChartType.outside_temp, downloadTempOut(outsideTemp), breakTime);
     }
 
     private void createRules(int i){
@@ -181,16 +180,16 @@ public class FuzzyLogic
         double ignition = rule.getIgnition();
         double heating;
         if(number == 1){
-            heating = heating_vVerylow;
+            heating = heating_vVeryLow;
         }
         else if(number == 2){
-            heating = heating_vlow;
+            heating = heating_vLow;
         }
         else if(number == 3){
             heating = heating_low;
         }
         else if(number == 4){
-            heating = heating_vlow;
+            heating = heating_vLow;
         }
         else if(number == 5){
             heating = heating_low;
@@ -369,7 +368,7 @@ public class FuzzyLogic
 
 
 
-    private double[] getTempIn(){
+    private double[] downloadTempIn(){
         double[] newInsideTemp = new double[1440];
         int number = 0;
         for(int i=0; i<86400; i=i+60){      //co minute pobieramy temperature wewnetrzna
@@ -379,7 +378,7 @@ public class FuzzyLogic
         return newInsideTemp;
     }
 
-    private double[] getPower(){
+    private double[] downloadPower(){
         double[] newPower = new double[1440];
         int number = 0;
         for(int i=0; i<86400; i=i+60){     //co minute pobieramy moc
@@ -389,7 +388,7 @@ public class FuzzyLogic
         return newPower;
     }
 
-    private double[] getTempOut(double[] outsideT) {
+    private double[] downloadTempOut(double[] outsideT) {
         double[] newOutsideTemp = new double[1440];
         int number = 0;
         for(int i=0; i<86400; i=i+60){      //co minute pobieramy temperature zewnetrzna
