@@ -19,7 +19,6 @@ public class RealTimeChart extends Stage
         setTitle(chartTitle);
         show();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Thread updateThread = new Thread(() -> {
             try
             {
@@ -30,7 +29,8 @@ public class RealTimeChart extends Stage
                     Thread.sleep(sleepMillisecond);
                     Date time = cal.getTime();
                     int finalI = i;
-                    Platform.runLater(() -> series.getData().add(new XYChart.Data<>(simpleDateFormat.format(time), getTempOrPower[finalI])));
+                    Platform.runLater(() -> series.getData().add(new XYChart.Data<>(new SimpleDateFormat("HH:mm").format(time),
+                            getTempOrPower[finalI])));
                 }
             }
             catch (Exception ignored) {}

@@ -17,7 +17,7 @@ public class Simulation
                 fuzzyLogic.setHeight(height);
                 fuzzyLogic.setOptT(Double.parseDouble(main.getOptTempField().getText()));
                 fuzzyLogic.setPowerMax(power);
-                fuzzyLogic.setBreakTime(main.getBreakTimeChoiceBox().getValue());
+                fuzzyLogic.setBreakTime(BreakTime.chooseBreakTime(main.getBreakTimeChoiceBox().getValue()));
 
                 new IsolationChoice(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).make().start();
             }

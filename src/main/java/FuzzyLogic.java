@@ -1,5 +1,4 @@
 import lombok.Setter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class FuzzyLogic
@@ -9,7 +8,7 @@ public class FuzzyLogic
     @Setter
     private double startT, area, height, optT, powerMax;
     @Setter
-    private String breakTime;
+    private int breakTime;
     @Setter
     private double d, c, m, k;
     private double[] insideTemp, power, Δt, ΔT;
@@ -59,76 +58,74 @@ public class FuzzyLogic
             //https://pl.khanacademy.org/science/chemistry/thermodynamics-chemistry/internal-energy-sal/a/heat
             // Q = m * c * Δt
         }
-        
-        int sleepMSec = chooseBreakTime(breakTime);
-        new RealTimeChart(getTempIn(), "Temperatury wewnętrzne w czasie", sleepMSec);
-        new RealTimeChart(getPower(),"Moc pieca w czasie", sleepMSec);
-        new RealTimeChart(getTempOut(outsideTemp), "Temperatury zewnętrzne w czasie", sleepMSec);
+
+        new RealTimeChart(getTempIn(), "Temperatury wewnętrzne w czasie", breakTime);
+        new RealTimeChart(getPower(),"Moc pieca w czasie", breakTime);
+        new RealTimeChart(getTempOut(outsideTemp), "Temperatury zewnętrzne w czasie", breakTime);
     }
 
     private void createRules(int i){
         xIn = optT - insideTemp[i];
         xOut = optT - outsideTemp[i];
 
-        LinkedList<Rule> ruleListWithIgnite = new LinkedList<>();
-        
+        LinkedList<Rule> ruleList = new LinkedList<>();
 
         // Wyznaczanie reguł z zapłonem
 
         //wew bardzo mala
         if(affiliationToInsideMissingVeryLow()>0 && affiliationToOutMissingLow() >0){
-            ruleListWithIgnite.add(new Rule(1, affiliationToInsideMissingVeryLow(), affiliationToOutMissingLow()));
+            ruleList.add(new Rule(1, affiliationToInsideMissingVeryLow(), affiliationToOutMissingLow()));
         }
         if(affiliationToInsideMissingVeryLow() > 0 && affiliationToOutMissingMedium() > 0){
-            ruleListWithIgnite.add(new Rule(2, affiliationToInsideMissingVeryLow(), affiliationToOutMissingMedium()));
+            ruleList.add(new Rule(2, affiliationToInsideMissingVeryLow(), affiliationToOutMissingMedium()));
         }
 
         if(affiliationToInsideMissingVeryLow() > 0 && affiliationToOutMissingHigh() > 0){
-            ruleListWithIgnite.add(new Rule(3, affiliationToInsideMissingVeryLow(), affiliationToOutMissingHigh()));
-            //  ruleListWithIgnite.add(new Regula());
+            ruleList.add(new Rule(3, affiliationToInsideMissingVeryLow(), affiliationToOutMissingHigh()));
+            //  ruleList.add(new Regula());
         }
         //wew mala
         if(affiliationToInsideMissingLow() > 0 && affiliationToOutMissingLow() > 0){
-            ruleListWithIgnite.add(new Rule(4, affiliationToInsideMissingLow(), affiliationToOutMissingLow()));
+            ruleList.add(new Rule(4, affiliationToInsideMissingLow(), affiliationToOutMissingLow()));
         }
         if(affiliationToInsideMissingLow() > 0 && affiliationToOutMissingMedium() > 0){
-            ruleListWithIgnite.add(new Rule(5, affiliationToInsideMissingLow(), affiliationToOutMissingMedium()));
+            ruleList.add(new Rule(5, affiliationToInsideMissingLow(), affiliationToOutMissingMedium()));
         }
         if(affiliationToInsideMissingLow() > 0 && affiliationToOutMissingHigh() > 0){
-            ruleListWithIgnite.add(new Rule(6, affiliationToInsideMissingLow(), affiliationToOutMissingHigh()));
+            ruleList.add(new Rule(6, affiliationToInsideMissingLow(), affiliationToOutMissingHigh()));
         }
         //srednia
         if(affiliationToInsideMissingMedium() > 0 && affiliationToOutMissingLow() > 0){
-            ruleListWithIgnite.add(new Rule(7, affiliationToInsideMissingMedium(), affiliationToOutMissingLow()));
+            ruleList.add(new Rule(7, affiliationToInsideMissingMedium(), affiliationToOutMissingLow()));
         }
         if(affiliationToInsideMissingMedium() > 0 && affiliationToOutMissingMedium() > 0){
-            ruleListWithIgnite.add(new Rule(8, affiliationToInsideMissingMedium(), affiliationToOutMissingMedium()));
+            ruleList.add(new Rule(8, affiliationToInsideMissingMedium(), affiliationToOutMissingMedium()));
         }
         if(affiliationToInsideMissingMedium() > 0 && affiliationToOutMissingHigh() > 0){
-            ruleListWithIgnite.add(new Rule(9, affiliationToInsideMissingMedium(), affiliationToOutMissingHigh()));
+            ruleList.add(new Rule(9, affiliationToInsideMissingMedium(), affiliationToOutMissingHigh()));
         }
         //duza
         if(affiliationToInsideMissingHigh() > 0 && affiliationToOutMissingLow() > 0){
-            ruleListWithIgnite.add(new Rule(10, affiliationToInsideMissingHigh(), affiliationToOutMissingLow()));
+            ruleList.add(new Rule(10, affiliationToInsideMissingHigh(), affiliationToOutMissingLow()));
         }
         if(affiliationToInsideMissingHigh() > 0 && affiliationToOutMissingMedium() > 0){
-            ruleListWithIgnite.add(new Rule(11, affiliationToInsideMissingHigh(), affiliationToOutMissingMedium()));
+            ruleList.add(new Rule(11, affiliationToInsideMissingHigh(), affiliationToOutMissingMedium()));
         }
         if(affiliationToInsideMissingHigh() > 0 && affiliationToOutMissingHigh() > 0){
-            ruleListWithIgnite.add(new Rule(12, affiliationToInsideMissingHigh(), affiliationToOutMissingHigh()));
+            ruleList.add(new Rule(12, affiliationToInsideMissingHigh(), affiliationToOutMissingHigh()));
         }
         //bardzo duza
         if(affiliationToInsideMissingVeryHigh() > 0 && affiliationToOutMissingLow() > 0){
-            ruleListWithIgnite.add(new Rule(13, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingLow()));
+            ruleList.add(new Rule(13, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingLow()));
         }
         if(affiliationToInsideMissingVeryHigh() > 0 && affiliationToOutMissingMedium() > 0){
-            ruleListWithIgnite.add(new Rule(14, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingMedium()));
+            ruleList.add(new Rule(14, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingMedium()));
         }
         if(affiliationToInsideMissingVeryHigh() > 0 && affiliationToOutMissingHigh() > 0){
-            ruleListWithIgnite.add(new Rule(15, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingHigh()));
+            ruleList.add(new Rule(15, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingHigh()));
         }
         
-        centreOfGravityMethod(i, ruleListWithIgnite);
+        centreOfGravityMethod(i, ruleList);
     }
     
     private void centreOfGravityMethod(int i, LinkedList<Rule> ruleListWithIgnite){
@@ -151,22 +148,6 @@ public class FuzzyLogic
         }
     }
     
-    
-    private int chooseBreakTime(String breakTime){
-        switch(breakTime)
-        {
-            case "1 sekunda" :
-                return 1000;
-            case "1/2 sekundy":
-                return 500;
-            case "1/5 sekundy":
-                return 200;
-            case "1/10 sekundy":
-                return 100;
-            default:
-                return 0;
-        }
-    }
 
     private double ruleWeight(Rule rule){
         int number = rule.getNumber();
