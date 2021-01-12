@@ -11,15 +11,15 @@ public class Simulation
 
             if (power >= 0 & height > 0 & area > 0 ) {
                 FuzzyLogic fuzzyLogic = new FuzzyLogic();
-                fuzzyLogic.setOutsideT(TemperatureFromFileHandler.chooseSeasonTemperatures(main.getSeasonChoiceBox().getValue()));
+                fuzzyLogic.setOutsideTemp(TemperatureFromFileHandler.chooseSeasonTemperatures(main.getSeasonChoiceBox().getValue()));
                 fuzzyLogic.setStartT(Double.parseDouble(main.getStartTempField().getText()));
                 fuzzyLogic.setArea(area);
                 fuzzyLogic.setHeight(height);
                 fuzzyLogic.setOptT(Double.parseDouble(main.getOptTempField().getText()));
                 fuzzyLogic.setPowerMax(power);
-                fuzzyLogic.setIsolation(main.getIsolationChoiceBox().getValue());
                 fuzzyLogic.setBreakTime(main.getBreakTimeChoiceBox().getValue());
-                fuzzyLogic.start();
+
+                new IsolationChoice(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).make().start();
             }
             else {
                 new ErrorAlert("Powierzchnia, wysokość, oraz moca pieca muszą być dodatnimi wartościami",

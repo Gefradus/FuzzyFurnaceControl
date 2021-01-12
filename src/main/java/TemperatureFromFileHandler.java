@@ -25,8 +25,7 @@ public class TemperatureFromFileHandler {
     }
 
     private static double[] getTemperatureArraysFromFile(String filePath){
-        Scanner scanner = getTemperaturesFromFile(filePath);
-        ArrayList<Double> listOfTemperatures = createListOfTemperatures(scanner);
+        ArrayList<Double> listOfTemperatures = createListOfTemperatures(getTemperaturesFromFile(filePath));
 
         double[] tempsArray = new double[listOfTemperatures.size()];
         for(int i=0; i < tempsArray.length; i++) {
@@ -50,9 +49,8 @@ public class TemperatureFromFileHandler {
     {
         double[] temperaturesFromFile = new double[25];
 
-        for(int i=1; i <= 25; i++)
-        {
-            temperaturesFromFile[i-1] = scanner.nextDouble();
+        for(int i = 0; i < 25; i++) {
+            temperaturesFromFile[i] = scanner.nextDouble();
         }
 
         return determine(temperaturesFromFile);

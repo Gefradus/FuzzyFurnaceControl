@@ -5,11 +5,12 @@ import java.util.LinkedList;
 public class FuzzyLogic
 {
     @Setter
-    private double[] outsideT;
+    private double[] outsideTemp;
     @Setter
     private double startT, area, height, optT, powerMax;
     @Setter
-    private String isolation, breakTime;
+    private String breakTime;
+    @Setter
     private double d, c, m, k;
     private double[] insideTemp, power, Δt, ΔT;
     private double xIn, xOut;
@@ -33,7 +34,6 @@ public class FuzzyLogic
         insideTemp[0] = startT;
         power[0] = 0;
         setHeatingPowerPercentage();
-        chooseIsolation();
 
         double[] tempIncrease = new double[86400];
         for (int i=0; i<=86399; i++) {
@@ -44,7 +44,7 @@ public class FuzzyLogic
             tempOutMissingHighBottom = 37.5;
             tempOutMissingHighTop = 75;
 
-            ΔT[i] = outsideT[i] - insideTemp[i];           // ΔT jest to różnica temperatury zewnetrznej i wewnetrznej
+            ΔT[i] = outsideTemp[i] - insideTemp[i];           // ΔT jest to różnica temperatury zewnetrznej i wewnetrznej
             Δt[i] = (k * Math.sqrt(area) * height * ΔT[i]) / (m * c * d);  //10 sekund czyli 1 iteracja
             // Δt jest to zmiana temperatury wewnętrznej pod wpływem temperatury zewnętrznej
 
@@ -63,12 +63,12 @@ public class FuzzyLogic
         int sleepMSec = chooseBreakTime(breakTime);
         new RealTimeChart(getTempIn(), "Temperatury wewnętrzne w czasie", sleepMSec);
         new RealTimeChart(getPower(),"Moc pieca w czasie", sleepMSec);
-        new RealTimeChart(getTempOut(outsideT), "Temperatury zewnętrzne w czasie", sleepMSec);
+        new RealTimeChart(getTempOut(outsideTemp), "Temperatury zewnętrzne w czasie", sleepMSec);
     }
 
     private void createRules(int i){
         xIn = optT - insideTemp[i];
-        xOut = optT - outsideT[i];
+        xOut = optT - outsideTemp[i];
 
         LinkedList<Rule> ruleListWithIgnite = new LinkedList<>();
         
@@ -128,26 +128,26 @@ public class FuzzyLogic
             ruleListWithIgnite.add(new Rule(15, affiliationToInsideMissingVeryHigh(), affiliationToOutMissingHigh()));
         }
         
-        metodaSrodkaCiezkosci(i, ruleListWithIgnite);
+        centreOfGravityMethod(i, ruleListWithIgnite);
     }
     
-    private void metodaSrodkaCiezkosci(int i, LinkedList<Rule> ruleListWithIgnite){
+    private void centreOfGravityMethod(int i, LinkedList<Rule> ruleListWithIgnite){
         LinkedList<Rule> ruleList = solveConflict(ruleListWithIgnite);
         
-        double metodaCiezkosciLicznik=0;
-        double metodaCiezkosciMianownik=0;
+        double numerator = 0;
+        double denominator = 0;
         power[i] = 0;
 
         for (Rule rule : ruleList) {
-            metodaCiezkosciLicznik += ruleWeight(rule);
+            numerator += ruleWeight(rule);
         }
 
         for (Rule rule : ruleList) {
-            metodaCiezkosciMianownik += rule.getIgnition();
+            denominator += rule.getIgnition();
         }
 
-        if(metodaCiezkosciMianownik!=0) {
-            power[i] = metodaCiezkosciLicznik / metodaCiezkosciMianownik;
+        if(denominator!=0) {
+            power[i] = numerator / denominator;
         }
     }
     
@@ -475,25 +475,7 @@ public class FuzzyLogic
         return newOutsideTemp;
     }
     
-    private void chooseIsolation(){
-        c = 1005;   //ciepło właściwe powietrza
-        m = area * height * 1.2; // masa powietrza , 1.2 - gestosc powietrza
-        
-        if (isolation.equals("Brak")){
-            k = 1.7;    //przewodnosc cieplna dla cegly
-            d = 0.18;   // grubosc sciany
-        }
-        if (isolation.equals("Styropian 15cm")){
 
-            k = (0.545 * 1.7) + (0.455 * 0.03); //45.5% grubości styropian o przewodnosci cieplnej 0.03
-            d = 0.33; // 0.18 + 0.15
-        }
-        if (isolation.equals("Wełna mineralna 15cm")){
-
-            k = (0.545 * 1.7) + (0.455 * 0.04); //45.5% grubości wełna o przewodnosci cieplnej 0.04
-            d = 0.33; // 0.18 + 0.15
-        }
-    }
 }
 
 
