@@ -36,8 +36,8 @@ public class FuzzyLogic
         setHeatingPowerPercentage();
 
         double[] tempIncrease = new double[86400];
-        for (int i=0; i<=86399; i++) {
-
+        for (int i=0; i<=86399; i++)
+        {
             tempOutMissingLowBottom = 0;
             tempOutMissingLowTop = 37.5;
             tempOutMissingMediumTop = 75;
@@ -132,7 +132,7 @@ public class FuzzyLogic
     }
     
     private void centreOfGravityMethod(int i, LinkedList<Rule> ruleListWithIgnite){
-        LinkedList<Rule> ruleList = solveConflict(ruleListWithIgnite);
+        LinkedList<Rule> ruleList = RulesConflictSolver.solveConflict(ruleListWithIgnite);
         
         double numerator = 0;
         double denominator = 0;
@@ -222,78 +222,6 @@ public class FuzzyLogic
         }
         
         return heating * ignition;
-    }
-
-    private void ruleddd(int[] conflictArray, LinkedList<Rule> ruleList, LinkedList<Rule> newRules, ArrayList<Integer> ruleNumbersToDelete)
-    {
-        if(conflictArray != null)
-        {
-            newRules.add(chooseMethodWithMoreIgnite(ruleList.get(conflictArray[0]), ruleList.get(conflictArray[1])));
-            ruleNumbersToDelete.add(ruleList.get(conflictArray[0]).getNumber());
-            ruleNumbersToDelete.add(ruleList.get(conflictArray[1]).getNumber());
-        }
-    }
-
-
-
-    private LinkedList<Rule> solveConflict(LinkedList<Rule> ruleList)
-    {
-        LinkedList<Rule> newRules = new LinkedList<>();
-        ArrayList<Integer> ruleNumbersToDelete = new ArrayList<>();
-        int[] conflictVeryLow = isConflict(ruleList, 2,6);
-        int[] conflictLow = isConflict(ruleList, 1,5);
-        int[] conflictMedium = isConflict(ruleList, 7,8);
-        int[] conflictLittleHigh = isConflict(ruleList, 7,12);
-        int[] conflictHigh = isConflict(ruleList, 11,15);
-        int[] conflictVeryHigh = isConflict(ruleList, 10,14);
-
-        ruleddd(conflictVeryLow, ruleList, newRules, ruleNumbersToDelete);
-        ruleddd(conflictLow, ruleList, newRules, ruleNumbersToDelete);
-        ruleddd(conflictMedium, ruleList, newRules, ruleNumbersToDelete);
-        ruleddd(conflictLittleHigh, ruleList, newRules, ruleNumbersToDelete);
-        ruleddd(conflictHigh, ruleList, newRules, ruleNumbersToDelete);
-        ruleddd(conflictVeryHigh, ruleList, newRules, ruleNumbersToDelete);
-
-        for (Integer integer : ruleNumbersToDelete) {
-            removeRuleFromList(ruleList, integer);
-        }
-
-        ruleList.addAll(newRules);
-
-        return ruleList;
-    }
-
-    //zwraca regule o wiekszym zapłonie
-    private Rule chooseMethodWithMoreIgnite(Rule rule1, Rule rule2){
-        return (rule1.getIgnition() > rule2.getIgnition()) ? rule1 : rule2;
-    }
-
-    //usuwa regule o podanym id i zwraca linkedliste
-    private void removeRuleFromList(LinkedList<Rule> ruleList, int ruleNumber){
-        for(int i = 0; i<ruleList.size();i++){
-            if(ruleList.get(i).getNumber() == ruleNumber){
-                ruleList.remove(i);
-            }
-        }
-    }
-
-    //zwraca indeksy regul, w ktorych jest konflikt
-    private int[] isConflict(LinkedList<Rule> ruleList, int r1test, int r2test){
-        int R1index = -1;
-        int R2index = -1;
-
-        for(int i=0; i<ruleList.size(); i++){
-            if(ruleList.get(i).getNumber() == r1test){
-                R1index = i;
-            }
-            if(ruleList.get(i).getNumber() == r2test){
-                R2index = i;
-            }
-        }
-        if(R1index!=-1 && R2index!=-1){
-            return new int[] {R1index, R2index};
-        }
-        else return null;
     }
 
 
@@ -433,15 +361,15 @@ public class FuzzyLogic
 
 
     private void setHeatingPowerPercentage(){
-                heating_vVerylow = powerMax * 0.3;
-                heating_vlow = powerMax * 0.4;
-                heating_low = powerMax * 0.5;
-                heating_littleLow = powerMax * 0.6;
-                heating_medium = powerMax * 0.7;
-                heating_littleHigh = powerMax * 0.8;
-                heating_High = powerMax * 0.9;
-                heating_vHigh = powerMax * 0.95;
-                heating_vVeryHigh = powerMax;
+        heating_vVerylow = powerMax * 0.3;
+        heating_vlow = powerMax * 0.4;
+        heating_low = powerMax * 0.5;
+        heating_littleLow = powerMax * 0.6;
+        heating_medium = powerMax * 0.7;
+        heating_littleHigh = powerMax * 0.8;
+        heating_High = powerMax * 0.9;
+        heating_vHigh = powerMax * 0.95;
+        heating_vVeryHigh = powerMax;
     }
 
 
