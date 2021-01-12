@@ -24,25 +24,48 @@ public class FuzzyLogic
     private double heating_vVerylow, heating_vlow, heating_low, heating_littleLow, heating_medium, heating_littleHigh, heating_High, heating_vHigh, heating_vVeryHigh;
     private double tempOutMissingLowBottom, tempOutMissingLowTop, tempOutMissingMediumTop, tempOutMissingHighBottom, tempOutMissingHighTop;
 
-    public void start() {
+    private void defineVars(){
+        defineArrays();
+        setHeatingPowerPercentage();
+        setTempsOut();
+
+        insideTemp[0] = startT;
+        power[0] = 0;
+    }
+
+    private void defineArrays(){
         power = new double[86400];
         insideTemp = new double[86401];
         Δt = new double[86400];
         ΔT = new double[86400];
+    }
 
-        insideTemp[0] = startT;
-        power[0] = 0;
-        setHeatingPowerPercentage();
+    private void setTempsOut(){
+        tempOutMissingLowBottom = 0;
+        tempOutMissingLowTop = 37.5;
+        tempOutMissingMediumTop = 75;
+        tempOutMissingHighBottom = 37.5;
+        tempOutMissingHighTop = 75;
+    }
+
+    private void setHeatingPowerPercentage(){
+        heating_vVerylow = powerMax * 0.3;
+        heating_vlow = powerMax * 0.4;
+        heating_low = powerMax * 0.5;
+        heating_littleLow = powerMax * 0.6;
+        heating_medium = powerMax * 0.7;
+        heating_littleHigh = powerMax * 0.8;
+        heating_High = powerMax * 0.9;
+        heating_vHigh = powerMax * 0.95;
+        heating_vVeryHigh = powerMax;
+    }
+
+    public void start() {
+        defineVars();
 
         double[] tempIncrease = new double[86400];
         for (int i=0; i<=86399; i++)
         {
-            tempOutMissingLowBottom = 0;
-            tempOutMissingLowTop = 37.5;
-            tempOutMissingMediumTop = 75;
-            tempOutMissingHighBottom = 37.5;
-            tempOutMissingHighTop = 75;
-
             ΔT[i] = outsideTemp[i] - insideTemp[i];           // ΔT jest to różnica temperatury zewnetrznej i wewnetrznej
             Δt[i] = (k * Math.sqrt(area) * height * ΔT[i]) / (m * c * d);  //10 sekund czyli 1 iteracja
             // Δt jest to zmiana temperatury wewnętrznej pod wpływem temperatury zewnętrznej
@@ -340,18 +363,6 @@ public class FuzzyLogic
     }
 
 
-
-    private void setHeatingPowerPercentage(){
-        heating_vVerylow = powerMax * 0.3;
-        heating_vlow = powerMax * 0.4;
-        heating_low = powerMax * 0.5;
-        heating_littleLow = powerMax * 0.6;
-        heating_medium = powerMax * 0.7;
-        heating_littleHigh = powerMax * 0.8;
-        heating_High = powerMax * 0.9;
-        heating_vHigh = powerMax * 0.95;
-        heating_vVeryHigh = powerMax;
-    }
 
 
     private double[] getTempIn(){

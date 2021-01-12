@@ -48,8 +48,8 @@ public class RealTimeChart extends Stage
         final NumberAxis yAxis = new NumberAxis();
 
         xAxis.setAnimated(false);
-        xAxis.setLabel("Czas");
         yAxis.setAnimated(false);
+        xAxis.setLabel("Czas");
 
         series = new XYChart.Series<>();
 
