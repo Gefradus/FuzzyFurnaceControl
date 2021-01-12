@@ -59,9 +59,9 @@ public class FuzzyLogic
             // Q = m * c * Δt
         }
 
-        new RealTimeChart(getTempIn(), "Temperatury wewnętrzne w czasie", breakTime);
-        new RealTimeChart(getPower(),"Moc pieca w czasie", breakTime);
-        new RealTimeChart(getTempOut(outsideTemp), "Temperatury zewnętrzne w czasie", breakTime);
+        new RealTimeChart(ChartType.inside_temp, getTempIn(), breakTime);
+        new RealTimeChart(ChartType.power, getPower(), breakTime);
+        new RealTimeChart(ChartType.outside_temp, getTempOut(outsideTemp), breakTime);
     }
 
     private void createRules(int i){
@@ -130,7 +130,7 @@ public class FuzzyLogic
     
     private void centreOfGravityMethod(int i, LinkedList<Rule> ruleListWithIgnite){
         LinkedList<Rule> ruleList = RulesConflictSolver.solveConflict(ruleListWithIgnite);
-        
+
         double numerator = 0;
         double denominator = 0;
         power[i] = 0;
@@ -201,7 +201,7 @@ public class FuzzyLogic
         else {
             return 0;
         }
-        
+
         return heating * ignition;
     }
 

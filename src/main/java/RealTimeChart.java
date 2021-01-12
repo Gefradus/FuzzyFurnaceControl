@@ -5,18 +5,21 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import lombok.Setter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class RealTimeChart extends Stage
 {
+    private ChartType chartType;
     private XYChart.Series<String, Number> series;
 
-    public RealTimeChart(double[] getTempOrPower, String chartTitle, int sleepMillisecond)
+    public RealTimeChart(ChartType chartType, double[] getTempOrPower, int sleepMillisecond)
     {
-        setScene(new Scene(createInstanceOfChart(chartTitle), 800, 600));
-        setTitle(chartTitle);
+        setScene(new Scene(createInstanceOfChart(), 800, 600));
+
         show();
 
         Thread updateThread = new Thread(() -> {
@@ -40,7 +43,7 @@ public class RealTimeChart extends Stage
         updateThread.start();
     }
 
-    private LineChart<String, Number> createInstanceOfChart(String chartTitle){
+    private LineChart<String, Number> createInstanceOfChart(){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
@@ -50,17 +53,20 @@ public class RealTimeChart extends Stage
 
         series = new XYChart.Series<>();
 
-        if (chartTitle.equals("Moc pieca w czasie")){
+        if (chartType == ChartType.power) {
             yAxis.setLabel ("P [kW]");
             series.setName("Moc pieca");
+            setTitle("Moc pieca w czasie");
         }
-        else if (chartTitle.equals("Temperatury zewnętrzne w czasie")){
+        else if (chartType == ChartType.outside_temp){
             yAxis.setLabel ("T [°C]");
             series.setName("Temperatury zewnętrzne");
+            setTitle("Temperatury zewnętrzne w czasie");
         }
-        else {
+        else if (chartType == ChartType.inside_temp) {
             yAxis.setLabel("T [°C]");
             series.setName("Temperatury wewnętrzne");
+            setTitle("Temperatury wewnętrzne w czasie");
         }
 
         LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
