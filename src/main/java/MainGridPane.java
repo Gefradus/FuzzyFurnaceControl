@@ -1,6 +1,6 @@
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+
 
 public class MainGridPane extends GridPane{
 
@@ -13,39 +13,41 @@ public class MainGridPane extends GridPane{
                 main.getInfoSeason(), main.getInfoBreakTime());
 
         setConstraints(main.getHeader(),0,0,3,1);
-        setConstraints(main.getAreaLabel(), 0,1);
-        setConstraints(main.getHeightLabel(), 0,2);
-        setConstraints(main.getPowerLabel(),0,3);
-        setConstraints(main.getStartTempLabel(),0,4);
-        setConstraints(main.getOptTempLabel(),0,5);
-        setConstraints(main.getIsolationLabel(),0,6);
-        setConstraints(main.getSeasonLabel(), 0,7);
-        setConstraints(main.getBreakTimeLabel(), 0, 8);
 
-        setConstraints(main.getInfoIsolation(),2,6);
-        setConstraints(main.getInfoSeason(), 2, 7);
-        setConstraints(main.getInfoBreakTime(), 2, 8);
-        setConstraints(main.getShowInAndOutSets(), 0, 9);
+        main.getHeader().setPadding(new Insets(0,0,10,0));
 
-        setConstraints(main.getAreaField(), 1,1);
-        setConstraints(main.getHeightField(),1,2);
-        setConstraints(main.getPowerField(),1,3);
-        setConstraints(main.getStartTempField(),1,4);
-        setConstraints(main.getOptTempField(),1,5);
-        setConstraints(main.getIsolationChoiceBox(),1,6);
-        setConstraints(main.getSeasonChoiceBox(),1,7);
-        setConstraints(main.getBreakTimeChoiceBox(), 1, 8);
-        setConstraints(main.getStartSimulation(),1,9);
-        setConstraints(main.getShowInAndOutSets(), 1, 10);
+        setConstraints(main.getAreaLabel(), 1,1);
+        setConstraints(main.getAreaField(), 1,2);
 
-        for(int i=0; i<9; i++) {
-            getRowConstraints().add(new RowConstraints(40));
-        }
-        getRowConstraints().add(new RowConstraints(65));
-        getRowConstraints().add(new RowConstraints(50));
+        setConstraints(main.getHeightLabel(), 1,3);
+        setConstraints(main.getHeightField(),1,4);
 
-        setPadding(new Insets(10, 0, 0, 100));
-        setVgap(5);    // przerwy miedzy wierszami
+        setConstraints(main.getPowerLabel(),1,5);
+        setConstraints(main.getPowerField(),1,6);
+
+        setConstraints(main.getStartTempLabel(),1,7);
+        setConstraints(main.getStartTempField(),1,8);
+
+        setConstraints(main.getOptTempLabel(),1,9);
+        setConstraints(main.getOptTempField(),1,10);
+
+        setConstraints(main.getIsolationLabel(),1,11);
+        setConstraints(main.getIsolationChoiceBox(),1,12);
+        setConstraints(main.getInfoIsolation(),2,12);
+
+        setConstraints(main.getSeasonLabel(), 1,13);
+        setConstraints(main.getSeasonChoiceBox(),1,14);
+        setConstraints(main.getInfoSeason(), 2, 14);
+
+        setConstraints(main.getBreakTimeLabel(), 1, 15);
+        setConstraints(main.getBreakTimeChoiceBox(), 1, 16);
+        setConstraints(main.getInfoBreakTime(), 2, 16);
+
+        setConstraints(main.getStartSimulation(),3,8);
+        setConstraints(main.getShowInAndOutSets(), 3, 10);
+
+        setPadding(new Insets(10, 0, 20, 20));
+        setVgap(5);
         setStyle("-fx-background-color: #333333;");
     }
 }

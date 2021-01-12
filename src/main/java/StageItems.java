@@ -41,9 +41,9 @@ public class StageItems {
     private void setWindowProperties(Main main, Stage window){
         window.setTitle("Symulacja pieca");
         window.setWidth(800);
-        window.setHeight(600);
-        window.setResizable(false);
-        window.setScene(new Scene(new MainGridPane(main)));
+        window.setHeight(700);
+        //window.setResizable(true);
+        window.setScene(new Scene(new MainScrollPane(new MainFlowPane(new MainGridPane(main)))));
         window.show();
     }
 
@@ -92,16 +92,16 @@ public class StageItems {
     }
 
     private void setLabels(Main main){
-        main.setAreaLabel(new Label("                     Powierzchnia[m2]:"));
-        main.setHeightLabel(new Label("                            Wysokość[m]:"));
-        main.setPowerLabel(new Label("                          Moc pieca[kW]:"));
-        main.setStartTempLabel(new Label("   Temperatura początkowa[°C]:"));
-        main.setOptTempLabel(new Label("     Optymalna temperatura[°C]:"));
-        main.setIsolationLabel(new Label("             Izolacja pomieszczenia:"));
-        main.setSeasonLabel(new Label("                                  Pora roku:"));
-        main.setBreakTimeLabel(new Label("Czas przerwy między próbkami:  "));
+        main.setAreaLabel(new Label("Powierzchnia[m2]:"));
+        main.setHeightLabel(new Label("Wysokość[m]:"));
+        main.setPowerLabel(new Label("Moc pieca[kW]:"));
+        main.setStartTempLabel(new Label("Temperatura początkowa[°C]:"));
+        main.setOptTempLabel(new Label("Optymalna temperatura[°C]:"));
+        main.setIsolationLabel(new Label("Izolacja pomieszczenia:"));
+        main.setSeasonLabel(new Label("Pora roku:"));
+        main.setBreakTimeLabel(new Label("Czas przerwy między próbkami:"));
 
-        Label header = new Label("                       Parametry pomieszczenia:");
+        Label header = new Label("Parametry pomieszczenia:");
         header.setFont(Font.font("Verdana", 20));
         main.setHeader(header);
     }
