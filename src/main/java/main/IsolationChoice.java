@@ -3,15 +3,9 @@ package main;
 import fuzzyLogic.FuzzyLogic;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class IsolationChoice
 {
-    private final FuzzyLogic fuzzyLogic;
-    private final double area;
-    private final double height;
-    private final String isolation;
-
-    public FuzzyLogic make()
+    public static FuzzyLogic make(FuzzyLogic fuzzyLogic, double area, double height, String isolation)
     {
         fuzzyLogic.setC(1005);   //ciepło właściwe powietrza
         fuzzyLogic.setM(area * height * 1.2); // masa powietrza , 1.2 - gestosc powietrza

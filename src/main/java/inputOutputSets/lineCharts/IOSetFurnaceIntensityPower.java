@@ -1,5 +1,4 @@
 package inputOutputSets.lineCharts;
-
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.XYChart;
 
@@ -56,6 +55,7 @@ public class IOSetFurnaceIntensityPower extends IOSetLineChart {
         series7.setName("Dużo");
         series8.setName("Bardzo dużo");
         series9.setName("Bardzo bardzo dużo");
+
         getData().addAll(series1, series2, series3, series4, series5, series6, series7, series8, series9);
     }
 }

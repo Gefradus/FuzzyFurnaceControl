@@ -22,7 +22,7 @@ public class Simulation
                 fuzzyLogic.setPowerMax(power);
                 fuzzyLogic.setBreakTime(BreakTime.chooseBreakTime(main.getBreakTimeChoiceBox().getValue()));
 
-                new IsolationChoice(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).make().start();
+                IsolationChoice.make(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).start();
             }
             else {
                 new ErrorAlert("Powierzchnia, wysokość, oraz moca pieca muszą być dodatnimi wartościami",
