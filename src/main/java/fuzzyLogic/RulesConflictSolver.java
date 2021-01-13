@@ -37,7 +37,7 @@ public class RulesConflictSolver {
         int R1index = -1;
         int R2index = -1;
 
-        for(int i=0; i<ruleList.size(); i++){
+        for(int i=0; i < ruleList.size(); i++){
             if(ruleList.get(i).getNumber() == r1test){
                 R1index = i;
             }
@@ -53,8 +53,7 @@ public class RulesConflictSolver {
 
     private static void ruleddd(int[] conflictArray, LinkedList<Rule> ruleList, LinkedList<Rule> newRules, ArrayList<Integer> ruleNumbersToDelete)
     {
-        if(conflictArray != null)
-        {
+        if(conflictArray != null) {
             newRules.add(chooseMethodWithMoreIgnite(ruleList.get(conflictArray[0]), ruleList.get(conflictArray[1])));
             ruleNumbersToDelete.add(ruleList.get(conflictArray[0]).getNumber());
             ruleNumbersToDelete.add(ruleList.get(conflictArray[1]).getNumber());
