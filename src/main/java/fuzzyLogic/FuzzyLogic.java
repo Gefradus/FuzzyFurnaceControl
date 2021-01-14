@@ -1,8 +1,8 @@
 package fuzzyLogic;
 
 import lombok.Setter;
-import main.ChartType;
-import main.RealTimeChart;
+import main.charts.ChartType;
+import main.charts.RealTimeChart;
 import java.util.LinkedList;
 
 public class FuzzyLogic
@@ -78,7 +78,7 @@ public class FuzzyLogic
         createCharts();
     }
 
-    private void createCharts(){
+    private void createCharts() {
         new RealTimeChart(ChartType.inside_temp, download(insideTemp), breakTime);
         new RealTimeChart(ChartType.power, download(power), breakTime);
         new RealTimeChart(ChartType.outside_temp, download(outsideTemp), breakTime);
@@ -99,8 +99,6 @@ public class FuzzyLogic
         xOut = optT - outsideTemp[i];
 
         LinkedList<Rule> ruleList = new LinkedList<>();
-
-        // Wyznaczanie reguł z zapłonem
 
         //wew bardzo mala
         if(affiliationToInsideMissingVeryLow()>0 && affiliationToOutMissingLow() >0){

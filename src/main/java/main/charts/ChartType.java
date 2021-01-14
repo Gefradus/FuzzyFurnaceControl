@@ -1,4 +1,4 @@
-package main;
+package main.charts;
 
 public enum ChartType {
     power,

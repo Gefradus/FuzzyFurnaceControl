@@ -1,7 +1,5 @@
 package main;
-
 import fuzzyLogic.FuzzyLogic;
-import lombok.AllArgsConstructor;
 
 public class IsolationChoice
 {
