@@ -1,11 +1,16 @@
 package main.charts;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RealTimeChart extends Stage
 {
@@ -18,7 +23,25 @@ public class RealTimeChart extends Stage
         setScene(new Scene(createInstanceOfChart(), 800, 600));
         show();
 
-        new UpdateThread(sleepMillisecond, getTempOrPower, series).start();
+        Thread updateThread = new Thread(() -> {
+            try
+            {
+                Calendar cal = Calendar.getInstance();
+                cal.clear();
+                for(int i = 0; i <= 1439; i++){
+                    cal.add(Calendar.MINUTE, 1);
+                    Thread.sleep(sleepMillisecond);
+                    Date time = cal.getTime();
+                    int finalI = i;
+                    Platform.runLater(() -> series.getData().add(
+                            new XYChart.Data<>(new SimpleDateFormat("HH:mm").format(time), getTempOrPower[finalI])));
+                }
+            }
+            catch (Exception ignored) {}
+        });
+
+        updateThread.setDaemon(true);
+        updateThread.start();
     }
 
     private LineChart<String, Number> createInstanceOfChart(){
