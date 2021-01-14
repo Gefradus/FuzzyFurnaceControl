@@ -18,6 +18,7 @@ public class Main extends Application {
     private Label header, areaLabel, heightLabel, powerLabel, startTempLabel, optTempLabel, isolationLabel, seasonLabel, breakTimeLabel;
     @Getter @Setter
     private TextField areaField, heightField, powerField, startTempField, optTempField;
+    private boolean ioSetsStageVisible;
 
     @Override
     public void start(Stage window) {
@@ -26,8 +27,14 @@ public class Main extends Application {
         infoIsolation.setOnAction(e -> new InfoAlert("infoIsolation"));
         infoSeason.setOnAction(e -> new InfoAlert("infoSeason"));
         infoBreakTime.setOnAction(e -> new InfoAlert("infoBreakTime"));
-        showInAndOutSets.setOnAction(e -> new IOSetsStage());
         startSimulation.setOnAction(e -> new Simulation(this));
+
+        showInAndOutSets.setOnAction(e -> {
+            if(!ioSetsStageVisible){
+                new IOSetsStage().setOnCloseRequest(event -> ioSetsStageVisible = false);
+                ioSetsStageVisible = true;
+            }
+        });
     }
 
 }
