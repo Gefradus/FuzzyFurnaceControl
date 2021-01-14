@@ -8,7 +8,7 @@ public class ChartsCreator
 {
     private static boolean chartsVisible;
     private static RealTimeChart insideTempChart;
-    private static RealTimeChart powerTempChart;
+    private static RealTimeChart powerChart;
     private static RealTimeChart outsideTempChart;
 
     public static void create(FuzzyLogic fuzzyLogic)
@@ -23,9 +23,9 @@ public class ChartsCreator
             insideTempChart.setXY(maxX - insideTempChart.getWidth(),0);
             insideTempChart.setOnCloseRequest(e -> closeAllCharts());
 
-            powerTempChart = new RealTimeChart(ChartType.power, download(fuzzyLogic.getPower()), breakTime);
-            powerTempChart.setXY(maxX / 2 - powerTempChart.getWidth() / 2, Screen.getPrimary().getBounds().getMaxY() - powerTempChart.getHeight());
-            powerTempChart.setOnCloseRequest(e -> closeAllCharts());
+            powerChart = new RealTimeChart(ChartType.power, download(fuzzyLogic.getPower()), breakTime);
+            powerChart.setXY(maxX / 2 - powerChart.getWidth() / 2, Screen.getPrimary().getBounds().getMaxY() - powerChart.getHeight());
+            powerChart.setOnCloseRequest(e -> closeAllCharts());
 
             outsideTempChart = new RealTimeChart(ChartType.outside_temp, download(fuzzyLogic.getOutsideTemp()), breakTime);
             outsideTempChart.setXY(0,0);
@@ -35,7 +35,7 @@ public class ChartsCreator
 
     private static void closeAllCharts(){
         insideTempChart.close();
-        powerTempChart.close();
+        powerChart.close();
         outsideTempChart.close();
         chartsVisible = false;
     }

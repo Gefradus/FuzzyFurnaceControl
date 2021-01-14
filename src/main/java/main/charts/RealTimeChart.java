@@ -18,9 +18,6 @@ public class RealTimeChart extends Stage
     public RealTimeChart(ChartType chartType, double[] getTempOrPower, int sleepMillisecond)
     {
         setScene(new Scene(createInstanceOfChart(chartType), 800, 600));
-        setOnCloseRequest(e -> {
-
-        });
         show();
 
         Thread updateThread = new Thread(() -> {
