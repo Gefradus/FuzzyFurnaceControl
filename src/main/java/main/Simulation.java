@@ -1,11 +1,11 @@
 package main;
 import fuzzyLogic.FuzzyLogic;
+import main.validation.SimulationValidationHandler;
 
 public class Simulation
 {
     public Simulation(Main main){
-        try
-        {
+        try {
             double area = Double.parseDouble(main.getAreaField().getText());
             double height = Double.parseDouble(main.getHeightField().getText());
             double power = Double.parseDouble(main.getPowerField().getText());

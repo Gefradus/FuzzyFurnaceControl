@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import main.mainPanes.MainScrollPane;
+import main.validation.TextFieldWithValidation;
 
 public class StageItems {
     private final int compWidth = 200;

@@ -1,4 +1,4 @@
-package main;
+package main.validation;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
