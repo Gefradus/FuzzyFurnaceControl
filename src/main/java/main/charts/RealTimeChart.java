@@ -18,6 +18,9 @@ public class RealTimeChart extends Stage
     public RealTimeChart(ChartType chartType, double[] getTempOrPower, int sleepMillisecond)
     {
         setScene(new Scene(createInstanceOfChart(chartType), 800, 600));
+        setOnCloseRequest(e -> {
+
+        });
         show();
 
         Thread updateThread = new Thread(() -> {
@@ -51,25 +54,30 @@ public class RealTimeChart extends Stage
 
         series = new XYChart.Series<>();
 
+        LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);;
+        chart.setAnimated(false);
+        chart.getData().add(series);
+        chart.setCreateSymbols(false);
+
         if (chartType == ChartType.power) {
             yAxis.setLabel ("P [kW]");
             series.setName("Moc pieca");
             setTitle("Moc pieca w czasie");
+            series.getNode().setStyle("-fx-stroke: #2dff00;");
         }
         else if (chartType == ChartType.outside_temp){
             yAxis.setLabel ("T [°C]");
             series.setName("Temperatury zewnętrzne");
             setTitle("Temperatury zewnętrzne w czasie");
+            series.getNode().setStyle("-fx-stroke: #a935fd;");
         }
-        else if (chartType == ChartType.inside_temp) {
+        else {
             yAxis.setLabel("T [°C]");
             series.setName("Temperatury wewnętrzne");
             setTitle("Temperatury wewnętrzne w czasie");
+            series.getNode().setStyle("-fx-stroke: #00aeff;");
         }
 
-        LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
-        chart.setAnimated(false);
-        chart.getData().add(series);
         return chart;
     }
 

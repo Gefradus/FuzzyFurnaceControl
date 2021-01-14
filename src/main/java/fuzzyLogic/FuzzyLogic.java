@@ -77,7 +77,7 @@ public class FuzzyLogic
             // Q = m * c * Δt
         }
 
-        new ChartsCreator(this);
+        ChartsCreator.create(this);
     }
 
 
