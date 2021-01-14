@@ -1,21 +1,24 @@
 package fuzzyLogic;
 
+import lombok.Getter;
 import lombok.Setter;
-import main.charts.ChartType;
-import main.charts.RealTimeChart;
+import main.charts.ChartsCreator;
+
 import java.util.LinkedList;
 
 public class FuzzyLogic
 {
-    @Setter
+    @Setter @Getter
     private double[] outsideTemp;
+    @Getter
+    private double[] insideTemp, power;
     @Setter
     private double startT, area, height, optT, powerMax;
-    @Setter
+    @Setter @Getter
     private int breakTime;
     @Setter
     private double d, c, m, k;
-    private double[] insideTemp, power, dt, dT;
+    private double[] dt, dT;
     private double xIn, xOut;
     private final double tempInMissVLowTop = 2;
     private final double tempInMissLowBottom = 1;
@@ -75,24 +78,9 @@ public class FuzzyLogic
             // Q = m * c * Δt
         }
 
-        createCharts();
+        new ChartsCreator(this);
     }
 
-    private void createCharts() {
-        new RealTimeChart(ChartType.inside_temp, download(insideTemp), breakTime);
-        new RealTimeChart(ChartType.power, download(power), breakTime);
-        new RealTimeChart(ChartType.outside_temp, download(outsideTemp), breakTime);
-    }
-
-    private double[] download(double[] array) {
-        double[] newArray = new double[1440];
-        int number = 0;
-        for(int i = 0; i < 86400; i += 60){      //co minute pobieramy
-            newArray[number] = array[i];
-            number++;
-        }
-        return newArray;
-    }
 
     private void createRules(int i){
         xIn = optT - insideTemp[i];

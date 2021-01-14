@@ -7,20 +7,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class RealTimeChart extends Stage
 {
-    private final ChartType chartType;
     private XYChart.Series<String, Number> series;
 
     public RealTimeChart(ChartType chartType, double[] getTempOrPower, int sleepMillisecond)
     {
-        this.chartType = chartType;
-        setScene(new Scene(createInstanceOfChart(), 800, 600));
+        setScene(new Scene(createInstanceOfChart(chartType), 800, 600));
         show();
 
         Thread updateThread = new Thread(() -> {
@@ -44,7 +41,7 @@ public class RealTimeChart extends Stage
         updateThread.start();
     }
 
-    private LineChart<String, Number> createInstanceOfChart(){
+    private LineChart<String, Number> createInstanceOfChart(ChartType chartType){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
@@ -76,5 +73,8 @@ public class RealTimeChart extends Stage
         return chart;
     }
 
-
+    public void setXY(double x, double y){
+        setX(x);
+        setY(y);
+    }
 }
