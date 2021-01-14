@@ -6,15 +6,13 @@ import javafx.stage.Screen;
 public class ChartsCreator {
     public ChartsCreator(FuzzyLogic fuzzyLogic) {
         int breakTime = fuzzyLogic.getBreakTime();
-
         RealTimeChart insideTempChart = new RealTimeChart(ChartType.inside_temp, download(fuzzyLogic.getInsideTemp()), breakTime);
         RealTimeChart powerTempChart = new RealTimeChart(ChartType.power, download(fuzzyLogic.getPower()), breakTime);
         RealTimeChart outsideTempChart = new RealTimeChart(ChartType.outside_temp, download(fuzzyLogic.getOutsideTemp()), breakTime);
 
         double maxX = Screen.getPrimary().getBounds().getMaxX();
-
         outsideTempChart.setXY(0,0);
-        insideTempChart.setXY(0, maxX - insideTempChart.getWidth());
+        insideTempChart.setXY(maxX - insideTempChart.getWidth(),0);
         powerTempChart.setXY(maxX / 2 - powerTempChart.getWidth() / 2, Screen.getPrimary().getBounds().getMaxY() - powerTempChart.getHeight());
     }
 

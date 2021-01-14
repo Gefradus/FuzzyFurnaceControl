@@ -3,7 +3,6 @@ package fuzzyLogic;
 import lombok.Getter;
 import lombok.Setter;
 import main.charts.ChartsCreator;
-
 import java.util.LinkedList;
 
 public class FuzzyLogic

@@ -86,11 +86,11 @@ public class StageItems {
     }
 
     private void setTextFields(Main main){
-        main.setAreaField(new TextField("150"));
-        main.setHeightField(new TextField("2.5"));
-        main.setPowerField(new TextField("5"));
-        main.setStartTempField(new TextField("12"));
-        main.setOptTempField(new TextField("25"));
+        main.setAreaField(new TextFieldWithValidation("150", false));
+        main.setHeightField(new TextFieldWithValidation("2.5",false));
+        main.setPowerField(new TextFieldWithValidation("5",false));
+        main.setStartTempField(new TextFieldWithValidation("12",true));
+        main.setOptTempField(new TextFieldWithValidation("25",true));
     }
 
     private void setLabels(Main main){

@@ -1,7 +1,5 @@
 package main;
-
 import fuzzyLogic.FuzzyLogic;
-import alerts.ErrorAlert;
 
 public class Simulation
 {
@@ -12,7 +10,7 @@ public class Simulation
             double height = Double.parseDouble(main.getHeightField().getText());
             double power = Double.parseDouble(main.getPowerField().getText());
 
-            if (power >= 0 & height > 0 & area > 0 ) {
+            if (power >= 0 & height > 0 & area > 0) {
                 FuzzyLogic fuzzyLogic = new FuzzyLogic();
                 fuzzyLogic.setOutsideTemp(TemperatureFromFileHandler.chooseSeasonTemperatures(main.getSeasonChoiceBox().getValue()));
                 fuzzyLogic.setStartT(Double.parseDouble(main.getStartTempField().getText()));
@@ -24,14 +22,11 @@ public class Simulation
                 IsolationChoice.make(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).start();
             }
             else {
-                new ErrorAlert("Powierzchnia, wysokość, oraz moca pieca muszą być dodatnimi wartościami",
-                        "Ustaw podane pola na dodatnie wartości i spróbuj ponownie");
+                new SimulationValidationHandler(area, height, power);
             }
         }
-        catch (Exception ignored)
-        {
-            new ErrorAlert("Wszystkie pola muszą zawierać wartości liczbowe",
-                    "Ustaw pola na wartości liczbowe i spróbuj ponownie");
+        catch (Exception e) {
+            new SimulationValidationHandler(e);
         }
     }
 }
