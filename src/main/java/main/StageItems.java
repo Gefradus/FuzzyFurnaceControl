@@ -12,7 +12,11 @@ import main.validation.TextFieldWithValidation;
 public class StageItems {
     private final int compWidth = 200;
 
-    public StageItems(Main main, Stage window)
+    static void init(Main main, Stage window) {
+        new StageItems(main, window);
+    }
+
+    private StageItems(Main main, Stage window)
     {
         setLabels(main);
         setTextFields(main);
@@ -116,12 +120,12 @@ public class StageItems {
         main.setSeasonChoiceBox(seasonChoiceBox);
 
         ChoiceBox<String> isolationChoiceBox = new ChoiceBox<>();
-        isolationChoiceBox.getItems().addAll("Brak","Styropian 15cm","Wełna mineralna 15cm");
+        isolationChoiceBox.getItems().addAll("Brak", "Styropian 15cm", "Wełna mineralna 15cm");
         isolationChoiceBox.setValue("Styropian 15cm");
         main.setIsolationChoiceBox(isolationChoiceBox);
 
         ChoiceBox<String> breakTimeChoiceBox = new ChoiceBox<>();
-        breakTimeChoiceBox.getItems().addAll("Brak", "1/10 sekundy", "1/5 sekundy", "1/2 sekundy", "1 sekunda" );
+        breakTimeChoiceBox.getItems().addAll("Brak", "1/10 sekundy", "1/5 sekundy", "1/2 sekundy", "1 sekunda");
         breakTimeChoiceBox.setValue("1/5 sekundy");
         main.setBreakTimeChoiceBox(breakTimeChoiceBox);
     }

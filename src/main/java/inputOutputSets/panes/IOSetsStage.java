@@ -8,7 +8,9 @@ import javafx.stage.Stage;
 
 public class IOSetsStage extends Stage
 {
-    public IOSetsStage() {
+    private static boolean visible;
+
+    private IOSetsStage() {
         StackPane root = new StackPane();
         root.getChildren().addAll(new IOSetsScrollPane());
         setScene(new Scene(root));
@@ -16,6 +18,13 @@ public class IOSetsStage extends Stage
         setWidth(800);
         setHeight(responsiveHeight());
         setResizable(false);
+    }
+
+    public static void init() {
+        if(!visible) {
+            new IOSetsStage().setOnCloseRequest(event -> visible = false);
+            visible = true;
+        }
     }
 
     private int responsiveHeight()
@@ -35,5 +44,6 @@ public class IOSetsStage extends Stage
             return 1020;
         }
     }
+
 
 }

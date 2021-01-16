@@ -3,7 +3,8 @@ package main.validation;
 import alerts.ErrorAlert;
 
 public class SimulationValidationHandler {
-    public SimulationValidationHandler(double area, double height, double power) throws Exception
+
+    public static void validate(double area, double height, double power) throws Exception
     {
         if(height <= 0 && area > 0 && power >= 0) {
             new ErrorAlert("Wysokość musi być większa od 0",
@@ -22,7 +23,7 @@ public class SimulationValidationHandler {
         }
     }
 
-    public SimulationValidationHandler(Exception e){
+    public static void validate(Exception e){
         new ErrorAlert("Błąd","Wystąpił nieoczekiwany błąd");
         e.printStackTrace();
     }

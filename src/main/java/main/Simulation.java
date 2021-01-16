@@ -4,7 +4,7 @@ import main.validation.SimulationValidationHandler;
 
 public class Simulation
 {
-    public Simulation(Main main){
+    public Simulation(Main main) {
         try {
             double area = Double.parseDouble(main.getAreaField().getText());
             double height = Double.parseDouble(main.getHeightField().getText());
@@ -22,11 +22,11 @@ public class Simulation
                 IsolationChoice.make(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).start();
             }
             else {
-                new SimulationValidationHandler(area, height, power);
+                SimulationValidationHandler.validate(area, height, power);
             }
         }
         catch (Exception e) {
-            new SimulationValidationHandler(e);
+             SimulationValidationHandler.validate(e);
         }
     }
 }
