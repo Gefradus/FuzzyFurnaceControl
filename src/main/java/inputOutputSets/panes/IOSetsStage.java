@@ -2,8 +2,9 @@ package inputOutputSets.panes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import static javafx.stage.Screen.getPrimary;
 
 
 public class IOSetsStage extends Stage
@@ -29,9 +30,9 @@ public class IOSetsStage extends Stage
 
     private int responsiveHeight()
     {
-        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        double screenHeight = getPrimary().getBounds().getHeight();
 
-        if ( screenHeight < 768) {
+        if (screenHeight < 768) {
             return 600;
         }
         else if (screenHeight < 900) {

@@ -1,16 +1,17 @@
 package main;
 
+import main.enums.BreakTimeType;
+
 public class BreakTime {
-    public static int chooseBreakTime(String breakTime){
-        switch(breakTime)
-        {
-            case "1 sekunda" :
+    public static int chooseBreakTime(String type) {
+        switch (BreakTimeType.getByValue(type)) {
+            case SECOND:
                 return 1000;
-            case "1/2 sekundy":
+            case HALF_SECOND:
                 return 500;
-            case "1/5 sekundy":
+            case ONE_FIFTH_SECOND:
                 return 200;
-            case "1/10 sekundy":
+            case ONE_TENTH_SECOND:
                 return 100;
             default:
                 return 0;

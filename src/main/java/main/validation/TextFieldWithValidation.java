@@ -21,14 +21,7 @@ public class TextFieldWithValidation extends TextField
     }
 
     private UnaryOperator<TextFormatter.Change> createFilter(Pattern regex){
-        return filter -> {
-            String text = filter.getControlNewText();
-            if (regex.matcher(text).matches()) {
-                return filter;
-            } else {
-                return null;
-            }
-        };
+        return filter -> regex.matcher(filter.getControlNewText()).matches() ? filter : null;
     }
 
     private StringConverter<Double> createConverter(){

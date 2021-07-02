@@ -1,13 +1,14 @@
 package alerts;
 
 import javafx.scene.control.Alert;
+import main.InfoAlertType;
 
 public class InfoAlert extends Alert
 {
     private String header;
     private String content;
 
-    public InfoAlert(String message)
+    public InfoAlert(InfoAlertType message)
     {
         super(Alert.AlertType.INFORMATION);
         setTitle("Dodatkowe informacje");
@@ -17,8 +18,8 @@ public class InfoAlert extends Alert
         showAndWait();
     }
 
-    private void chooseHeaderAndContent(String message){
-        if(message.equals("infoBreakTime"))
+    private void chooseHeaderAndContent(InfoAlertType message){
+        if(message.equals(InfoAlertType.BREAK_TIME))
         {
             header = "Czas rzeczywisty odpowiadający następnej próbce pomiaru na wykresie.\n" +
                     "Czas przerwy na wykresie (między próbkami) wynosi 1 minutę ";
@@ -28,7 +29,7 @@ public class InfoAlert extends Alert
                       "1/2 sekundy - W ciągu sekundy pojawią się 2 próbki pomiarów (2 minuty)\n" +
                       "1 sekunda - W ciągu sekundy pojawi się próbka pomiarów (1 minuta)";
         }
-        else if(message.equals("infoSeason")){
+        else if(message.equals(InfoAlertType.SEASON)){
             header = "Wybór temperaturych zewnętrznych w ciągu dnia na podstawie przykładowych pomiarów.";
             content = "Wiosna - (Kraków, 5 kwietnia 2019r)\n" +
                       "Lato -  (Gdańsk, 15 Lipca 2019r)\n" +

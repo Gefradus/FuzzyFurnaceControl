@@ -10,8 +10,7 @@ public class BasicScrollPane extends ScrollPane
         setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
         setVbarPolicy(ScrollBarPolicy.ALWAYS);
         setContent(flow);
-        viewportBoundsProperty().addListener((ov, oldBounds, bounds) ->
-        {
+        viewportBoundsProperty().addListener((ov, oldBounds, bounds) -> {
             flow.setPrefWidth(bounds.getWidth());
             flow.setPrefHeight(bounds.getHeight());
         });

@@ -8,10 +8,14 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+import static main.InfoAlertType.*;
+
 public class Main extends Application {
 
     @Getter @Setter
-    private Button infoBreakTime, startSimulation, infoIsolation, infoSeason, showInAndOutSets;
+    private InfoButton infoBreakTime, infoIsolation, infoSeason;
+    @Getter @Setter
+    private Button startSimulation, showInAndOutSets;
     @Getter @Setter
     private ChoiceBox<String> isolationChoiceBox, seasonChoiceBox, breakTimeChoiceBox;
     @Getter @Setter
@@ -23,9 +27,9 @@ public class Main extends Application {
     @Override
     public void start(Stage window) {
         StageItems.init(this, window);
-        infoIsolation.setOnAction(e -> new InfoAlert("infoIsolation"));
-        infoSeason.setOnAction(e -> new InfoAlert("infoSeason"));
-        infoBreakTime.setOnAction(e -> new InfoAlert("infoBreakTime"));
+        infoIsolation.setOnAction(e -> new InfoAlert(ISOLATION));
+        infoSeason.setOnAction(e -> new InfoAlert(SEASON));
+        infoBreakTime.setOnAction(e -> new InfoAlert(BREAK_TIME));
         startSimulation.setOnAction(e -> new Simulation(this));
         showInAndOutSets.setOnAction(e -> IOSetsStage.init());
     }

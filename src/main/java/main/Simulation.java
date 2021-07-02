@@ -1,6 +1,8 @@
 package main;
 import fuzzyLogic.FuzzyLogic;
-import main.validation.SimulationValidationHandler;
+
+import static main.IsolationChoice.make;
+import static main.validation.SimulationValidationHandler.validate;
 
 public class Simulation
 {
@@ -11,22 +13,24 @@ public class Simulation
             double power = Double.parseDouble(main.getPowerField().getText());
 
             if (power >= 0 & height > 0 & area > 0) {
-                FuzzyLogic fuzzyLogic = new FuzzyLogic();
-                fuzzyLogic.setOutsideTemp(TemperatureFromFileHandler.chooseSeasonTemperatures(main.getSeasonChoiceBox().getValue()));
-                fuzzyLogic.setStartT(Double.parseDouble(main.getStartTempField().getText()));
-                fuzzyLogic.setArea(area);
-                fuzzyLogic.setHeight(height);
-                fuzzyLogic.setOptT(Double.parseDouble(main.getOptTempField().getText()));
-                fuzzyLogic.setPowerMax(power);
-                fuzzyLogic.setBreakTime(BreakTime.chooseBreakTime(main.getBreakTimeChoiceBox().getValue()));
-                IsolationChoice.make(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).start();
+                FuzzyLogic fuzzyLogic = new FuzzyLogic(
+                    TemperatureFromFileHandler.chooseSeasonTemperatures(main.getSeasonChoiceBox().getValue()),
+                    Double.parseDouble(main.getStartTempField().getText()),
+                    area,
+                    height,
+                    Double.parseDouble(main.getOptTempField().getText()),
+                    power,
+                    BreakTime.chooseBreakTime(main.getBreakTimeChoiceBox().getValue())
+                );
+
+                make(fuzzyLogic, area, height, main.getIsolationChoiceBox().getValue()).start();
             }
             else {
-                SimulationValidationHandler.validate(area, height, power);
+                validate(area, height, power);
             }
         }
         catch (Exception e) {
-             SimulationValidationHandler.validate(e);
+             validate(e);
         }
     }
 }

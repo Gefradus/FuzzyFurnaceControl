@@ -5,17 +5,18 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static main.enums.Season.getByValue;
+
 public class TemperatureFromFileHandler {
 
     public static double[] chooseSeasonTemperatures(String season)
     {
-        switch (season)
-        {
-            case "Wiosna":
+        switch (getByValue(season)) {
+            case SPRING:
                 return getTemperatureArraysFromFile(getFileFromResource("/temps/wiosna.txt"));
-            case "Lato":
+            case SUMMER:
                 return getTemperatureArraysFromFile(getFileFromResource("/temps/lato.txt"));
-            case "Jesień":
+            case AUTUMN:
                 return getTemperatureArraysFromFile(getFileFromResource("/temps/jesień.txt"));
             default:
                 return getTemperatureArraysFromFile(getFileFromResource("/temps/zima.txt"));

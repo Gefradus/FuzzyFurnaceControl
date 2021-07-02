@@ -2,12 +2,16 @@ package main;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import main.enums.BreakTimeType;
+import main.enums.IsolationChoiceType;
+import main.enums.Season;
 import main.mainPanes.MainScrollPane;
 import main.validation.TextFieldWithValidation;
+
+import static javafx.collections.FXCollections.observableArrayList;
+import static main.enums.BreakTimeType.ONE_FIFTH_SECOND;
 
 public class StageItems {
     private final int compWidth = 200;
@@ -16,8 +20,7 @@ public class StageItems {
         new StageItems(main, window);
     }
 
-    private StageItems(Main main, Stage window)
-    {
+    private StageItems(Main main, Stage window) {
         setLabels(main);
         setTextFields(main);
         setChoiceBoxes(main);
@@ -46,7 +49,7 @@ public class StageItems {
         setWindowProperties(main, window);
     }
 
-    private void setWindowProperties(Main main, Stage window){
+    private void setWindowProperties(Main main, Stage window) {
         window.setTitle("Kontroler pieca na logice rozmytej");
         window.setWidth(800);
         window.setHeight(700);
@@ -54,31 +57,18 @@ public class StageItems {
         window.show();
     }
 
-    private void setButtons(Main main){
-        Image image = new Image(getClass().getResourceAsStream("/img/info.png"));
-
-        Button infoIsolation = new Button();
-        infoIsolation.setGraphic(new ImageView(image));
-        infoIsolation.setStyle("-fx-background-color: transparent;");
-        main.setInfoIsolation(infoIsolation);
-
-        Button infoSeason = new Button();
-        infoSeason.setGraphic(new ImageView(image));
-        infoSeason.setStyle("-fx-background-color: transparent;");
-        main.setInfoSeason(infoSeason);
-
-        Button infoBreakTime = new Button();
-        infoBreakTime.setGraphic(new ImageView(image));
-        infoBreakTime.setStyle("-fx-background-color: transparent;");
-        main.setInfoBreakTime(infoBreakTime);
+    private void setButtons(Main main) {
+        main.setInfoIsolation(new InfoButton());
+        main.setInfoSeason(new InfoButton());
+        main.setInfoBreakTime(new InfoButton());
 
         Button startSimulation = new Button();
         Label label = new Label("Start symulacji");
         label.setStyle("-fx-effect: dropshadow( one-pass-box , black , 6 , 0.2 , 2 , 2 ) ; -fx-text-fill: #e8e8e8;");
         startSimulation.setGraphic(label);
         startSimulation.setStyle("-fx-background-color: linear-gradient(#dc81ab, #ab4c49)");
-        startSimulation.setMinSize(compWidth,45);
-        startSimulation.setMaxSize(compWidth,45);
+        startSimulation.setMinSize(compWidth, 45);
+        startSimulation.setMaxSize(compWidth, 45);
         main.setStartSimulation(startSimulation);
 
         Button showInAndOutSets = new Button();
@@ -90,15 +80,15 @@ public class StageItems {
         main.setShowInAndOutSets(showInAndOutSets);
     }
 
-    private void setTextFields(Main main){
+    private void setTextFields(Main main) {
         main.setAreaField(new TextFieldWithValidation("150", false));
-        main.setHeightField(new TextFieldWithValidation("2.5",false));
-        main.setPowerField(new TextFieldWithValidation("5",false));
-        main.setStartTempField(new TextFieldWithValidation("12",true));
-        main.setOptTempField(new TextFieldWithValidation("25",true));
+        main.setHeightField(new TextFieldWithValidation("2.5", false));
+        main.setPowerField(new TextFieldWithValidation("5", false));
+        main.setStartTempField(new TextFieldWithValidation("12", true));
+        main.setOptTempField(new TextFieldWithValidation("25", true));
     }
 
-    private void setLabels(Main main){
+    private void setLabels(Main main) {
         main.setAreaLabel(new Label("Powierzchnia[m2]:"));
         main.setHeightLabel(new Label("Wysokość[m]:"));
         main.setPowerLabel(new Label("Moc pieca[kW]:"));
@@ -113,31 +103,31 @@ public class StageItems {
         main.setHeader(header);
     }
 
-    private void setChoiceBoxes(Main main){
+    private void setChoiceBoxes(Main main) {
         ChoiceBox<String> seasonChoiceBox = new ChoiceBox<>();
-        seasonChoiceBox.getItems().addAll("Wiosna", "Lato", "Jesień", "Zima");
-        seasonChoiceBox.setValue("Zima");
+        seasonChoiceBox.getItems().addAll(observableArrayList(Season.getValues()));
+        seasonChoiceBox.setValue(Season.WINTER.getValue());
         main.setSeasonChoiceBox(seasonChoiceBox);
 
         ChoiceBox<String> isolationChoiceBox = new ChoiceBox<>();
-        isolationChoiceBox.getItems().addAll("Brak", "Styropian 15cm", "Wełna mineralna 15cm");
-        isolationChoiceBox.setValue("Styropian 15cm");
+        isolationChoiceBox.setItems(observableArrayList(IsolationChoiceType.getValues()));
+        isolationChoiceBox.setValue(IsolationChoiceType.STYROFOAM.getValue());
         main.setIsolationChoiceBox(isolationChoiceBox);
 
         ChoiceBox<String> breakTimeChoiceBox = new ChoiceBox<>();
-        breakTimeChoiceBox.getItems().addAll("Brak", "1/10 sekundy", "1/5 sekundy", "1/2 sekundy", "1 sekunda");
-        breakTimeChoiceBox.setValue("1/5 sekundy");
+        breakTimeChoiceBox.setItems(observableArrayList(BreakTimeType.getValues()));
+        breakTimeChoiceBox.setValue(ONE_FIFTH_SECOND.getValue());
         main.setBreakTimeChoiceBox(breakTimeChoiceBox);
     }
 
-    private void setStyleForAllLabels(Label... labels){
-        for(Label label : labels){
+    private void setStyleForAllLabels(Label... labels) {
+        for (Label label : labels) {
             label.setStyle("-fx-text-fill: white");
         }
     }
 
-    private void setSizeForAllControls(Control... controls){
-        for(Control control : controls){
+    private void setSizeForAllControls(Control... controls) {
+        for (Control control : controls) {
             control.setMinSize(compWidth, 32);
             control.setMaxSize(compWidth, 32);
         }

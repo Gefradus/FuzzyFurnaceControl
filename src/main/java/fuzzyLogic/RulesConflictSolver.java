@@ -23,10 +23,7 @@ public class RulesConflictSolver {
         ruleddd(conflictHigh, ruleList, newRules, ruleNumbersToDelete);
         ruleddd(conflictVeryHigh, ruleList, newRules, ruleNumbersToDelete);
 
-        for (Integer ruleNumber : ruleNumbersToDelete) {
-            ruleList.removeIf(rule -> rule.getNumber() == ruleNumber);
-        }
-
+        ruleNumbersToDelete.forEach(ruleNumber -> ruleList.removeIf(rule -> rule.getNumber() == ruleNumber));
         ruleList.addAll(newRules);
         return ruleList;
     }

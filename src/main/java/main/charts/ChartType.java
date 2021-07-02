@@ -1,7 +1,7 @@
 package main.charts;
 
 public enum ChartType {
-    power,
-    inside_temp,
-    outside_temp
+    POWER,
+    INSIDE_TEMP,
+    OUTSIDE_TEMP
 }

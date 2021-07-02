@@ -19,15 +19,15 @@ public class ChartsCreator
         if(!chartsVisible){
             chartsVisible = true;
 
-            insideTempChart = new RealTimeChart(ChartType.inside_temp, download(fuzzyLogic.getInsideTemp()), breakTime);
+            insideTempChart = new RealTimeChart(ChartType.INSIDE_TEMP, download(fuzzyLogic.getInsideTemp()), breakTime);
             insideTempChart.setXY(maxX - insideTempChart.getWidth(),0);
             insideTempChart.setOnCloseRequest(e -> closeAllCharts());
 
-            powerChart = new RealTimeChart(ChartType.power, download(fuzzyLogic.getPower()), breakTime);
+            powerChart = new RealTimeChart(ChartType.POWER, download(fuzzyLogic.getPower()), breakTime);
             powerChart.setXY(maxX / 2 - powerChart.getWidth() / 2, Screen.getPrimary().getBounds().getMaxY() - powerChart.getHeight());
             powerChart.setOnCloseRequest(e -> closeAllCharts());
 
-            outsideTempChart = new RealTimeChart(ChartType.outside_temp, download(fuzzyLogic.getOutsideTemp()), breakTime);
+            outsideTempChart = new RealTimeChart(ChartType.OUTSIDE_TEMP, download(fuzzyLogic.getOutsideTemp()), breakTime);
             outsideTempChart.setXY(0,0);
             outsideTempChart.setOnCloseRequest(e -> closeAllCharts());
         }
