@@ -159,42 +159,38 @@ public class FuzzyLogic {
 
 
     private double ruleWeight(Rule rule) {
-        int number = rule.getNumber();
-        double heating = 0;
+        return setHeatingBasedOnRuleNumber(rule.getNumber()) * rule.getIgnition();
+    }
 
-        if (number == 1) {
-            heating = heating_vVeryLow;
-        } else if (number == 2) {
-            heating = heating_vLow;
-        } else if (number == 3) {
-            heating = heating_low;
-        } else if (number == 4) {
-            heating = heating_vLow;
-        } else if (number == 5) {
-            heating = heating_low;
-        } else if (number == 6) {
-            heating = heating_littleLow;
-        } else if (number == 7) {
-            heating = heating_medium;
-        } else if (number == 8) {
-            heating = heating_medium;
-        } else if (number == 9) {
-            heating = heating_littleHigh;
-        } else if (number == 10) {
-            heating = heating_littleHigh;
-        } else if (number == 11) {
-            heating = heating_High;
-        } else if (number == 12) {
-            heating = heating_vHigh;
-        } else if (number == 13) {
-            heating = heating_High;
-        } else if (number == 14) {
-            heating = heating_vHigh;
-        } else if (number == 15) {
-            heating = heating_vVeryHigh;
+    private double setHeatingBasedOnRuleNumber(int number) {
+        switch (number) {
+            case 1:
+                return heating_vVeryLow;
+            case 2:
+            case 4:
+                return heating_vLow;
+            case 3:
+            case 5:
+                return heating_low;
+            case 6:
+                return heating_littleLow;
+            case 7:
+            case 8:
+                return heating_medium;
+            case 9:
+            case 10:
+                return heating_littleHigh;
+            case 11:
+            case 13:
+                return heating_High;
+            case 12:
+            case 14:
+                return heating_vHigh;
+            case 15:
+                return heating_vVeryHigh;
+            default:
+                return 0;
         }
-
-        return heating * rule.getIgnition();
     }
 
 

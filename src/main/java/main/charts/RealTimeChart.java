@@ -52,7 +52,6 @@ public class RealTimeChart extends Stage {
         series = new XYChart.Series<>();
 
         LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
-        ;
         chart.setAnimated(false);
         chart.getData().add(series);
         chart.setCreateSymbols(false);
